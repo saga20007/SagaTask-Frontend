@@ -605,6 +605,20 @@
   align-items: center;
   gap: 6px;
 }
+.link-btn {
+  margin-top: 6px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--texte-doux);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  color: var(--noir);
+}
 
 .prio-group {
   display: flex;
