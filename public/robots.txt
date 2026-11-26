@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /todos
+
+Sitemap: https://sagatask-frontend.vercel.app/sitemap.xml

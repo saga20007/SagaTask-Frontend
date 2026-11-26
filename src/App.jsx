@@ -3,10 +3,18 @@ import AuthPage from "./pages/AuthPage";
 import Todos from "./pages/Todos";
 import PrivateRoute from "./components/PrivateRoute";
 
+function Home() {
+  return localStorage.getItem("token") ? (
+    <Navigate to="/todos" replace />
+  ) : (
+    <AuthPage />
+  );
+}
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/todos" replace />} />
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
       <Route
