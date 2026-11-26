@@ -76,6 +76,7 @@ function Todos() {
 
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -203,14 +204,20 @@ function Todos() {
     navigate("/login");
   };
 
-  const changeFilter = (key) => {
+    const changeFilter = (key) => {
     setFilter(key);
     setSelectedId(null);
+    setMenuOpen(false);
   };
 
   return (
     <div className="todos-page">
-      <div className={`shell ${selectedTodo ? "detail-open" : ""}`}>
+            <div className={`shell ${selectedTodo ? "detail-open" : ""}`}>
+        <div
+          className={`backdrop ${menuOpen ? "show" : ""}`}
+          onClick={() => setMenuOpen(false)}
+        />
+
         <Sidebar
           filter={filter}
           onFilter={changeFilter}
@@ -219,9 +226,21 @@ function Todos() {
           onSearch={setSearch}
           onLogout={logout}
           user={user}
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
         />
 
         <main className="main">
+          <button
+            type="button"
+            className="menu-btn"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Ouvrir le menu"
+          >
+            <Icon name="menu" size={18} />
+            <span>Menu</span>
+          </button>
+          
           <header className="main-header">
             <div>
               <p className="date-line">{formatLongToday()}</p>

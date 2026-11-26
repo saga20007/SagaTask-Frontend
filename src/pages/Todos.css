@@ -174,6 +174,7 @@
 }
 .sidebar-footer {
   margin-top: auto;
+  padding-top: 24px;
 }
 
 .dot {
@@ -699,23 +700,106 @@
 }
 
 /* ---------- Petits écrans (version simple, à peaufiner) ---------- */
+/* Éléments réservés au téléphone : cachés sur ordinateur */
+.menu-btn,
+.sidebar-close,
+.backdrop {
+  display: none;
+}
+/* ---------- Téléphone et petites fenêtres ---------- */
 @media (max-width: 900px) {
   .todos-page {
     padding: 0;
+    align-items: stretch;
   }
 
   .shell {
-    height: auto;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     max-height: none;
     border-radius: 0;
     grid-template-columns: 1fr !important;
   }
 
+  /* Le menu devient un tiroir qui glisse depuis la gauche */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(290px, 84vw);
+    z-index: 60;
+    border-radius: 0 22px 22px 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: none;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .sidebar-close {
+    display: flex;
+    margin-left: auto;
+    padding: 6px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: var(--sable);
+    cursor: pointer;
+  }
+
+  .sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Fond assombri derrière le menu */
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Bouton qui ouvre le menu */
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 8px 14px;
+    background: var(--blanc);
+    border: 1px solid #e3e1db;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texte);
+    cursor: pointer;
+  }
+
+  .main {
+    padding: 20px 16px;
+  }
+
+  .main-header h1 {
+    font-size: 26px;
+  }
+
+  /* Le détail d'une tâche s'ouvre en plein écran */
   .detail {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 70;
     transform: translateX(100%);
     transition: transform 0.3s ease;
   }
@@ -728,46 +812,4 @@
     width: 100%;
     border-left: none;
   }
-}
-.sidebar-greeting {
-  padding: 0 10px 14px;
-  font-size: 30px;
-  color: var(--sable);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebar-greeting strong {
-  color: var(--blanc);
-  font-weight: 700;
-}
-.detail input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.date-row input[type="date"] {
-  flex: 1.5;
-  min-width: 0;
-}
-
-.date-row input[type="time"] {
-  flex: 1;
-  min-width: 0;
-}
-
-.link-btn {
-  margin-top: 6px;
-  padding: 0;
-  background: none;
-  border: none;
-  font-size: 12px;
-  color: var(--texte-doux);
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.link-btn:hover {
-  color: var(--noir);
 }
