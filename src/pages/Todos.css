@@ -707,36 +707,53 @@
   display: none;
 }
 /* ---------- Téléphone et petites fenêtres ---------- */
+body.app-locked {
+  overflow: hidden;
+  min-height: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+/* ---------- Téléphone et petites fenêtres ---------- */
 @media (max-width: 900px) {
   .todos-page {
     padding: 0;
     align-items: stretch;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .shell {
-    height: 100vh;
-    height: 100dvh;
+    height: 100%;
     max-height: none;
     border-radius: 0;
     grid-template-columns: 1fr !important;
   }
 
-  /* Le menu devient un tiroir qui glisse depuis la gauche */
+  /* Le menu devient un tiroir noir qui glisse depuis la gauche */
   .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     width: min(290px, 84vw);
-    z-index: 60;
+    z-index: 100;
+    background: var(--noir);
+    opacity: 1;
     border-radius: 0 22px 22px 0;
     transform: translateX(-100%);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    visibility: hidden;
+    overscroll-behavior: contain;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+      visibility 0s linear 0.3s;
   }
 
   .sidebar.open {
     transform: none;
+    visibility: visible;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, visibility 0s;
   }
 
   .sidebar-close {
@@ -754,13 +771,13 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  /* Fond assombri derrière le menu */
+  /* Fond assombri derrière le menu : un clic dessus ferme le menu */
   .backdrop {
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 55;
-    background: rgba(0, 0, 0, 0.45);
+    z-index: 90;
+    background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -787,8 +804,10 @@
     cursor: pointer;
   }
 
+  /* La liste est la seule zone qui défile */
   .main {
     padding: 20px 16px;
+    overscroll-behavior-y: contain;
   }
 
   .main-header h1 {
@@ -799,7 +818,7 @@
   .detail {
     position: fixed;
     inset: 0;
-    z-index: 70;
+    z-index: 110;
     transform: translateX(100%);
     transition: transform 0.3s ease;
   }
@@ -811,5 +830,6 @@
   .detail-form {
     width: 100%;
     border-left: none;
+    overscroll-behavior: contain;
   }
 }

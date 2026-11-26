@@ -91,6 +91,11 @@ function Todos() {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
+    // Bloque le défilement de la page entière : seule la liste défile
+  useEffect(() => {
+    document.body.classList.add("app-locked");
+    return () => document.body.classList.remove("app-locked");
+  }, []);
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -240,7 +245,7 @@ function Todos() {
             <Icon name="menu" size={18} />
             <span>Menu</span>
           </button>
-          
+
           <header className="main-header">
             <div>
               <p className="date-line">{formatLongToday()}</p>
